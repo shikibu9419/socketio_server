@@ -58,7 +58,7 @@ function socketStart(server) {
 
     // サーバー側で保持しているメッセージをクライアント側に送信する
     socket.emit('init', map)
-    console.log('map emitted')
+    console.log('map emitted: ', map.layers[0])
 
     socket.on('layer/add', layer => {
       console.log('layer/add')
@@ -74,7 +74,7 @@ function socketStart(server) {
 
       const tools = map.layers.find(layer => layer.id === prop.layerId).tools
       const toolId = prop.tool.id
-      map.layers.find(layer => layer.id === prop.layerId).tools = {...tools, toolId: prop.tool}
+      map.layers.find(layer => layer.id === prop.layerId).tools = {...tools, [toolId]: prop.tool}
 
       socket.broadcast.emit('tool/add', prop)
     })
@@ -84,6 +84,13 @@ function socketStart(server) {
       console.log(prop)
 
       socket.broadcast.emit('tool/update', prop)
+    })
+
+    socket.on('map/update', prop => {
+      console.log('map/update')
+      console.log(prop)
+
+      socket.broadcast.emit('map/update', prop)
     })
 
     socket.on('select/add', prop => {
