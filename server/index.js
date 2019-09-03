@@ -109,14 +109,14 @@ function socketStart(server) {
       console.log(prop)
 
       const hoge = JSON.parse(prop)
-      hoge(hoge.userId)
+      fuga(hoge.userId)
 
       socket.broadcast.emit('select/clear', prop)
     })
   })
 }
 
-function hoge(userId) {
+function fuga(userId) {
   for(toolId of Object.keys(selected)) {
     if(selected[toolId] === userId)
       delete selected[toolId]
