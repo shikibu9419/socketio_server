@@ -44,7 +44,7 @@ async function start () {
   console.log('Socket.IO starts')
 }
 
-let map = {name: 'UNKO', layers: []}
+let map = {layers: []}
 let selected = {}
 
 function socketStart(server) {
@@ -58,7 +58,7 @@ function socketStart(server) {
 
     // サーバー側で保持しているメッセージをクライアント側に送信する
     socket.emit('init', map)
-    console.log('map emitted: ', map.layers[0])
+    console.log('map emitted: ', map)
 
     socket.on('layer/add', layer => {
       console.log('layer/add')
