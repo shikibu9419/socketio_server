@@ -64,17 +64,18 @@ function socketStart(server) {
       console.log('layer/add')
       console.log(layer)
 
-      map.layers.push(layer)
+      map.layers.push(JSON.parse(layer))
       socket.broadcast.emit('layer/add', layer)
     })
 
     socket.on('tool/add', prop => {
       console.log('tool/add')
       console.log(prop)
+      const hoge = JSON.parse(prop)
 
-      const tools = map.layers.find(layer => layer.id === prop.layerId).tools
-      const toolId = prop.tool.id
-      map.layers.find(layer => layer.id === prop.layerId).tools = {...tools, [toolId]: prop.tool}
+      const tools = map.layers.find(layer => layer.id === hoge.layerId).tools
+      const toolId = hoge.tool.id
+      map.layers.find(layer => layer.id === hoge.layerId).tools = {...tools, [toolId]: hoge.tool}
 
       socket.broadcast.emit('tool/add', prop)
     })
@@ -97,7 +98,8 @@ function socketStart(server) {
       console.log('select/add')
       console.log(prop)
 
-      selected[prop.toolId] = prop.userId
+      const hoge = JSON.parse(prop)
+      selected[hoge.toolId] = hoge.userId
 
       socket.broadcast.emit('select/add', prop)
     })
@@ -106,7 +108,8 @@ function socketStart(server) {
       console.log('select/clear')
       console.log(prop)
 
-      hoge(prop.userId)
+      const hoge = JSON.parse(prop)
+      hoge(hoge.userId)
 
       socket.broadcast.emit('select/clear', prop)
     })
