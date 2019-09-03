@@ -57,7 +57,7 @@ function socketStart(server) {
     console.log('id: ' + socket.id + ' is connected')
 
     // サーバー側で保持しているメッセージをクライアント側に送信する
-    socket.emit('init', map)
+    socket.emit('init', JSON.stringify(map))
     console.log('map emitted: ', map)
 
     socket.on('layer/add', layer => {
